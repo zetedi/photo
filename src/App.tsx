@@ -13,7 +13,16 @@ import { pages, site } from './site';
 const Home = () => (
   <>
     <Hero />
-    <Interlude />
+    <Interlude
+      id="8"
+      quote={
+        <>
+          “…seeding light <br />
+          into matter.”
+        </>
+      }
+    />
+    <Interlude id="6" quote="“…before the sight.”" place="low-end" className="mt-gutter" />
   </>
 );
 
