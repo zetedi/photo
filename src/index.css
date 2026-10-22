@@ -1,0 +1,348 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --font-serif: 'Cormorant Garamond Variable', 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-sans: 'Inter Variable', Inter, ui-sans-serif, system-ui, sans-serif;
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-sway: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --spacing-gutter: var(--gutter);
+}
+
+/* ---------------------------------------------------------------- tokens */
+
+:root {
+  --paper: #f3f0ea;
+  --paper-2: #ebe7df;
+  --ink: #171614;
+  --ink-2: #4b4741;
+  --ink-3: #87827a;
+  --line: rgb(23 22 20 / 0.13);
+
+  --glass-tint: rgb(251 249 245 / 0.34);
+  --glass-tint-strong: rgb(248 246 241 / 0.6);
+  --glass-edge: rgb(255 255 255 / 0.6);
+  --glass-shade: rgb(23 22 20 / 0.07);
+  --glass-shadow: rgb(38 30 18 / 0.2);
+
+  --gutter: clamp(1rem, 3.2vw, 2.75rem);
+  --header-h: 4.5rem;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --paper: #0f0e0c;
+  --paper-2: #161512;
+  --ink: #ece7dd;
+  --ink-2: #b2ab9f;
+  --ink-3: #7a7469;
+  --line: rgb(236 231 221 / 0.12);
+
+  --glass-tint: rgb(22 21 18 / 0.38);
+  --glass-tint-strong: rgb(18 17 15 / 0.62);
+  --glass-edge: rgb(255 255 255 / 0.16);
+  --glass-shade: rgb(0 0 0 / 0.3);
+  --glass-shadow: rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+  }
+
+  body {
+    background: var(--paper);
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  :where(h1, h2, h3, blockquote) {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    text-wrap: balance;
+  }
+
+  em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  html:has(dialog[open]),
+  html[data-locked] {
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ------------------------------------------------------------ typography */
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+}
+
+/* An underline that draws in from the left and leaves to the right. */
+@utility link-line {
+  background: linear-gradient(currentColor, currentColor) no-repeat right bottom / 0 1px;
+  transition: background-size 0.6s var(--ease-silk);
+  &:hover,
+  &:focus-visible,
+  &[aria-current='true'] {
+    background-position: left bottom;
+    background-size: 100% 1px;
+  }
+}
+
+/* ----------------------------------------------------------------- glass */
+
+/*
+ * Glass surfaces. Chromium gets true refraction through an SVG displacement
+ * filter (see lib/glass.ts); every other engine falls back to frosted glass.
+ */
+.glass {
+  position: relative;
+  background-color: var(--glass-tint);
+  box-shadow:
+    inset 0 0 0 1px var(--glass-edge),
+    inset 0 1px 0 var(--glass-edge),
+    0 1px 2px var(--glass-shade),
+    0 16px 40px -18px var(--glass-shadow);
+  transition:
+    background-color 0.5s var(--ease-silk),
+    box-shadow 0.5s var(--ease-silk);
+}
+
+.glass[data-glass='frost'] {
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  backdrop-filter: blur(18px) saturate(1.35);
+}
+
+.glass-strong {
+  --glass-tint: var(--glass-tint-strong);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong {
+    --glass-tint: var(--paper);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- motion */
+
+.reveal {
+  opacity: 0;
+  translate: 0 1.75rem;
+  transition:
+    opacity 1.4s var(--ease-silk),
+    translate 1.4s var(--ease-silk);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal.is-in,
+.is-in .reveal {
+  opacity: 1;
+  translate: none;
+}
+
+/* Lines of display type rise out of a mask. Padding keeps descenders visible. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.line-mask > span {
+  display: block;
+  translate: 0 105%;
+  transition: translate 1.5s var(--ease-silk);
+  transition-delay: var(--delay, 0ms);
+}
+
+.is-in .line-mask > span {
+  translate: none;
+}
+
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.scroll-cue {
+  animation: scroll-cue 2.8s var(--ease-sway) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .line-mask > span {
+    translate: none;
+    transition-property: opacity;
+  }
+  .scroll-cue {
+    animation: none;
+  }
+}
+
+/* -------------------------------------------------------------- carousel */
+
+.carousel-track {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track[data-dragging] {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.carousel-slide {
+  scroll-snap-align: start;
+}
+
+.carousel-frame {
+  height: clamp(17rem, 60svh, 44rem);
+}
+
+@media (max-width: 767px) {
+  .carousel-frame {
+    width: 84vw;
+    height: auto;
+  }
+}
+
+/* The photo is wider than its frame and drifts against the scroll. */
+.carousel-slide img {
+  width: 112%;
+  max-width: none;
+  margin-left: -6%;
+  translate: calc(var(--shift, 0) * -5%) 0;
+  transition: scale 1.2s var(--ease-silk);
+}
+
+.carousel-slide:hover img {
+  scale: 1.025;
+}
+
+/* -------------------------------------------------------------- lightbox */
+
+.lightbox {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.lightbox::backdrop {
+  background: rgb(0 0 0 / 0.2);
+}
+
+.lightbox[open],
+.lightbox[open]::backdrop {
+  animation: lightbox-in 0.6s var(--ease-silk);
+}
+
+.lightbox[data-closing],
+.lightbox[data-closing]::backdrop {
+  animation: lightbox-out 0.4s var(--ease-silk) forwards;
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; }
+}
+
+@keyframes lightbox-out {
+  to { opacity: 0; }
+}
+
+@keyframes figure-in {
+  from {
+    opacity: 0;
+    scale: 0.985;
+  }
+}
+
+.figure-in {
+  animation: figure-in 0.8s var(--ease-silk);
+}
+
+/* ------------------------------------------------------- theme transition */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}

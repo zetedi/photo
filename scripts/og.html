@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- Open Graph card template, rendered to public/og.jpg by build-images.mjs. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'Cormorant';
+    src: url('../node_modules/@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-normal.woff2') format('woff2');
+    font-weight: 300 700;
+  }
+  @font-face {
+    font-family: 'Cormorant';
+    font-style: italic;
+    src: url('../node_modules/@fontsource-variable/cormorant-garamond/files/cormorant-garamond-latin-wght-italic.woff2') format('woff2');
+    font-weight: 300 700;
+  }
+  @font-face {
+    font-family: 'Inter';
+    src: url('../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2');
+    font-weight: 100 900;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #f3f0ea; color: #171614; }
+  body { position: relative; font-family: 'Cormorant', serif; -webkit-font-smoothing: antialiased; }
+  .copy { position: absolute; left: 64px; top: 60px; bottom: 56px; width: 520px; display: flex; flex-direction: column; }
+  .eyebrow { font: 500 14px/1 'Inter', sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #6b665d; }
+  h1 { margin-top: auto; font-weight: 300; font-size: 84px; line-height: .94; letter-spacing: -.012em; }
+  h1 em { font-style: italic; font-weight: 400; }
+  .mark { margin-top: 36px; display: flex; align-items: center; gap: 14px; font-style: italic; font-size: 28px; color: #3d3a35; }
+  .mark svg { width: 26px; height: 26px; }
+  .photo { position: absolute; top: 28px; right: 28px; bottom: 28px; width: 548px; background: url('../photos/bg.jpg') center / cover; overflow: hidden; }
+  .lens { position: absolute; border-radius: 50%; background-image: url('../photos/bg.jpg'); background-repeat: no-repeat;
+    box-shadow: 0 26px 50px -14px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.35),
+      inset 0 -14px 34px rgba(0,0,0,.32), inset 0 10px 22px rgba(255,255,255,.22); }
+  .lens::after { content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle at 32% 24%, rgba(255,255,255,.55), rgba(255,255,255,0) 22%),
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 78%, rgba(0,0,0,.18) 100%); }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <p class="eyebrow">Zoltan Etedi — Photography</p>
+    <h1>Creating worlds through capturing <em>light</em></h1>
+    <p class="mark">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#3d3a35" stroke-linecap="round"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M17.5 27.5a15.5 15.5 0 0 1 10-10" stroke-width="3"/></svg>
+      The Divine Story
+    </p>
+  </div>
+  <div class="photo"><div class="lens"></div></div>
+  <script>
+    // Place a 1.9× loupe over the photo panel, aligned with the cover-fitted background.
+    const [iw, ih] = [4132, 2324];
+    const panel = document.querySelector('.photo');
+    const lens = document.querySelector('.lens');
+    const { width: pw, height: ph } = panel.getBoundingClientRect();
+    const s = Math.max(pw / iw, ph / ih);
+    const [bw, bh] = [iw * s, ih * s];
+    const [bx, by] = [(pw - bw) / 2, (ph - bh) / 2];
+    const [cx, cy, r, m] = [pw * 0.58, ph * 0.56, 118, 1.9];
+    Object.assign(lens.style, {
+      left: `${cx - r}px`, top: `${cy - r}px`, width: `${2 * r}px`, height: `${2 * r}px`,
+      backgroundSize: `${bw * m}px ${bh * m}px`,
+      backgroundPosition: `${r - (cx - bx) * m}px ${r - (cy - by) * m}px`,
+    });
+  </script>
+</body>
+</html>
