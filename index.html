@@ -27,18 +27,21 @@
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link
-      rel="preload"
-      as="image"
-      type="image/webp"
-      imagesrcset="/images/bg-640.webp 640w, /images/bg-1024.webp 1024w, /images/bg-1600.webp 1600w, /images/bg-2048.webp 2048w, /images/bg-2880.webp 2880w, /images/bg-4132.webp 4132w"
-      imagesizes="(min-width: 1024px) 58vw, 100vw"
-      fetchpriority="high"
-    />
-
     <script>
-      // Resolve the theme before first paint so night mode never flashes white.
       (function () {
+        // The hero photo is the home page's largest paint: start fetching it before the app boots.
+        if (location.pathname === '/') {
+          var link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.type = 'image/webp';
+          link.setAttribute('imagesrcset', '/images/bg-640.webp 640w, /images/bg-1024.webp 1024w, /images/bg-1600.webp 1600w, /images/bg-2048.webp 2048w, /images/bg-2880.webp 2880w, /images/bg-4132.webp 4132w');
+          link.setAttribute('imagesizes', '(min-width: 1024px) 58vw, 100vw');
+          link.setAttribute('fetchpriority', 'high');
+          document.head.appendChild(link);
+        }
+
+        // Resolve the theme before first paint so night mode never flashes white.
         var stored = null;
         try { stored = localStorage.getItem('theme'); } catch (e) {}
         var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;

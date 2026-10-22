@@ -36,7 +36,6 @@
   --glass-shadow: rgb(38 30 18 / 0.2);
 
   --gutter: clamp(1rem, 3.2vw, 2.75rem);
-  --header-h: 4.5rem;
   color-scheme: light;
 }
 
@@ -67,7 +66,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
-    scroll-padding-top: var(--header-h);
   }
 
   body {
@@ -138,7 +136,7 @@
   transition: background-size 0.6s var(--ease-silk);
   &:hover,
   &:focus-visible,
-  &[aria-current='true'] {
+  &[aria-current] {
     background-position: left bottom;
     background-size: 100% 1px;
   }
@@ -345,4 +343,28 @@
 
 ::view-transition-new(root) {
   z-index: 2;
+}
+
+/* Page changes: the old page fades away, the new one settles in, the header holds still. */
+html[data-transition='page'] .site-header {
+  view-transition-name: site-header;
+}
+
+html[data-transition='page']::view-transition-old(root) {
+  animation: page-out 0.35s var(--ease-silk) both;
+}
+
+html[data-transition='page']::view-transition-new(root) {
+  animation: page-in 0.8s var(--ease-silk) 0.08s both;
+}
+
+@keyframes page-out {
+  to { opacity: 0; }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
 }

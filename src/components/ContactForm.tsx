@@ -80,13 +80,13 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="bg-paper-2 px-gutter py-[clamp(6rem,14vw,12rem)] transition-colors">
+    <section className="min-h-svh bg-paper-2 px-gutter py-[clamp(6rem,14vw,12rem)] transition-colors">
       <div className="grid gap-x-gutter gap-y-16 lg:grid-cols-12">
         <Reveal className="lg:col-span-5">
           <p className="eyebrow">03 — Contact</p>
-          <h2 className="display mt-5 text-[clamp(2.75rem,5.4vw,5.75rem)]">
+          <h1 className="display mt-5 text-[clamp(2.75rem,5.4vw,5.75rem)]">
             Let’s create your <em>new&nbsp;world</em>.
-          </h2>
+          </h1>
           <p className="mt-8 max-w-sm leading-relaxed text-ink-2">
             Your time, the place of your choice. Tell me about the moment you’d like to hold on to.
           </p>

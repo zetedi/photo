@@ -9,8 +9,8 @@ export const site = {
   ],
 };
 
-export const sections = [
-  { id: 'work', label: 'Work' },
-  { id: 'about', label: 'About' },
-  { id: 'contact', label: 'Contact' },
+export const pages = [
+  { path: '/work', label: 'Work', title: 'Selected works' },
+  { path: '/about', label: 'About', title: 'About' },
+  { path: '/contact', label: 'Contact', title: 'Contact' },
 ] as const;

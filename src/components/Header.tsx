@@ -1,29 +1,14 @@
 import { useEffect, useState } from 'react';
-import { sections, site } from '@/site';
+import { Link, usePath } from '@/router';
+import { pages, site } from '@/site';
 import { cx, pad } from '@/lib/util';
 import { Glass } from './Glass';
 import { LensMark } from './icons';
 import { ThemeToggle } from './ThemeToggle';
 
-function useActiveSection() {
-  const [active, setActive] = useState<string | null>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
-      },
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
-    const targets = ['top', ...sections.map((s) => s.id)].map((id) => document.getElementById(id));
-    targets.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-  return active;
-}
-
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const active = useActiveSection();
+  const path = usePath();
 
   useEffect(() => {
     if (!open) return;
@@ -38,14 +23,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between gap-4 p-[calc(var(--gutter)*0.6)] pt-4 md:pt-5">
+      <header className="site-header pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between gap-4 p-[calc(var(--gutter)*0.6)] pt-4 md:pt-5">
         <Glass
-          as="a"
-          href="#top"
+          as={Link}
+          to="/"
           onClick={() => setOpen(false)}
           bezel={13}
           className="pointer-events-auto flex h-12 items-center gap-2.5 pr-5 pl-4 text-ink"
-          aria-label={`${site.name} — back to top`}
+          aria-label={`${site.name} — home`}
         >
           <LensMark className="size-[18px]" />
           <span className="font-serif text-[1.3rem] leading-none italic">{site.name}</span>
@@ -53,15 +38,15 @@ const Header = () => {
 
         <Glass bezel={13} className="pointer-events-auto flex h-12 items-center gap-1 pr-1.5 pl-2 md:pl-6">
           <nav aria-label="Main" className="hidden items-center gap-7 pr-4 md:flex">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                aria-current={active === s.id ? 'true' : undefined}
+            {pages.map((p) => (
+              <Link
+                key={p.path}
+                to={p.path}
+                aria-current={path === p.path ? 'page' : undefined}
                 className="link-line eyebrow pb-0.5 text-ink! transition-colors"
               >
-                {s.label}
-              </a>
+                {p.label}
+              </Link>
             ))}
           </nav>
           <span className="mr-1 hidden h-4 w-px bg-line md:block" aria-hidden="true" />
@@ -87,10 +72,11 @@ const Header = () => {
         aria-hidden={!open}
       >
         <nav aria-label="Mobile" className="flex flex-col gap-2">
-          {sections.map((s, i) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
+          {pages.map((p, i) => (
+            <Link
+              key={p.path}
+              to={p.path}
+              aria-current={path === p.path ? 'page' : undefined}
               onClick={() => setOpen(false)}
               tabIndex={open ? 0 : -1}
               className={cx(
@@ -100,8 +86,8 @@ const Header = () => {
               style={{ transitionDelay: open ? `${120 + i * 70}ms` : '0ms' }}
             >
               <span className="eyebrow">{pad(i + 1)}</span>
-              {s.label}
-            </a>
+              {p.label}
+            </Link>
           ))}
         </nav>
       </div>

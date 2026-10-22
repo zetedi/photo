@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from '@/lib/util';
 import { site } from '@/site';
 import { LensMark } from './icons';
 
@@ -12,9 +13,13 @@ const Footer = () => {
             </a>
           ))}
         </nav>
-        <a href="#top" className="eyebrow link-line pb-0.5 text-ink-2!">
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'smooth' })}
+          className="eyebrow link-line cursor-pointer pb-0.5 text-ink-2!"
+        >
           Back to top ↑
-        </a>
+        </button>
       </div>
 
       <p

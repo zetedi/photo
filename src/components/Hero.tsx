@@ -1,5 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { useParallax } from '@/hooks/useParallax';
+import { Link } from '@/router';
 import { site } from '@/site';
 import { cx } from '@/lib/util';
 import { Glass } from './Glass';
@@ -19,7 +20,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="top" className={cx('relative lg:grid lg:min-h-svh lg:grid-cols-12', shown && 'is-in')}>
+    <section className={cx('relative lg:grid lg:min-h-svh lg:grid-cols-12', shown && 'is-in')}>
       <div className="relative flex flex-col px-gutter pt-32 pb-14 lg:col-span-5 lg:pt-40 lg:pb-[calc(var(--gutter)*1.2)]">
         <div ref={copy} className="flex flex-1 flex-col">
           <p className="eyebrow reveal" style={{ '--delay': '150ms' } as CSSProperties}>
@@ -39,15 +40,15 @@ const Hero = () => {
           </p>
 
           <div className="reveal mt-10 flex flex-wrap items-center gap-x-8 gap-y-4" style={{ '--delay': '820ms' } as CSSProperties}>
-            <Glass as="a" href="#contact" bezel={12} className="eyebrow group inline-flex h-12 items-center gap-3 px-6 text-ink!">
+            <Glass as={Link} to="/contact" bezel={12} className="eyebrow group inline-flex h-12 items-center gap-3 px-6 text-ink!">
               Book a session
               <span aria-hidden="true" className="transition-transform duration-500 ease-(--ease-silk) group-hover:translate-x-1">
                 →
               </span>
             </Glass>
-            <a href="#work" className="eyebrow link-line pb-0.5 text-ink-2!">
+            <Link to="/work" className="eyebrow link-line pb-0.5 text-ink-2!">
               View the work
-            </a>
+            </Link>
           </div>
         </div>
 

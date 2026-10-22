@@ -115,13 +115,13 @@ const Portfolio = () => {
   };
 
   return (
-    <section id="work" className="py-[clamp(6rem,13vw,11rem)]">
+    <section className="py-[clamp(6rem,13vw,11rem)]">
       <div className="flex flex-wrap items-end justify-between gap-8 px-gutter">
         <Reveal>
           <p className="eyebrow">01 — Portfolio</p>
-          <h2 className="display mt-5 text-[clamp(2.75rem,5.4vw,5.75rem)]">
+          <h1 className="display mt-5 text-[clamp(2.75rem,5.4vw,5.75rem)]">
             Selected <em>works</em>
-          </h2>
+          </h1>
         </Reveal>
         <Reveal delay={120} className="flex items-center gap-6">
           <p className="font-serif text-2xl lining-nums tabular-nums" aria-live="polite">
