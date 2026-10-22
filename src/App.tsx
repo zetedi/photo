@@ -17,8 +17,8 @@ const Home = () => (
       id="8"
       quote={
         <>
-          “…seeding light <br />
-          into matter.”
+          “seeding light <br />
+          into matter…”
         </>
       }
     />

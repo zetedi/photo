@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { useParallax } from '@/hooks/useParallax';
 import { works, type PhotoId } from '@/photos';
-import { site } from '@/site';
 import { cx } from '@/lib/util';
 import { Glass } from './Glass';
 import { Picture } from './Picture';
@@ -38,7 +37,6 @@ const Interlude = ({ id, quote, place = 'center', className }: InterludeProps) =
         <Glass as="figure" radius={36} bezel={30} depth={1.1} className="glass-strong max-w-[34rem] px-9 py-10 text-center sm:px-14 sm:py-12">
           <Reveal>
             <blockquote className="text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.08] italic">{quote}</blockquote>
-            <figcaption className="eyebrow mt-6 text-ink-2!">{site.photographer}</figcaption>
           </Reveal>
         </Glass>
       </div>
