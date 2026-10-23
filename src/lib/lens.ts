@@ -35,7 +35,7 @@ uniform float u_alpha;
 
 const float BASE = 0.3;                      // flat glass under the dome, in radii
 const vec3 IOR = vec3(1.513, 1.52, 1.533);   // R, G, B — crown glass, dispersion nudged up a little
-const vec2 GLINT = vec2(-0.44, -0.44);       // the highlight, in radii from the centre: where the logo's dot sits
+const vec2 GLINT = vec2(-0.36, -0.36);       // the highlight, in radii from the centre: where the logo's dot sits
 const float GLINT_POWER = 180.0;             // its size: higher is a smaller light
 
 vec2 photoUV(vec2 p) {

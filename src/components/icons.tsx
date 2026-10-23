@@ -3,7 +3,7 @@ export function LensMark({ className, weight = 3.5 }: { className?: string; weig
   return (
     <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeLinecap="round" className={className} aria-hidden="true">
       <circle cx="32" cy="32" r="25" strokeWidth={weight} />
-      <circle cx="21" cy="21" r={weight * 1.3} fill="currentColor" stroke="none" />
+      <circle cx="23" cy="23" r={weight * 1.3} fill="currentColor" stroke="none" />
     </svg>
   );
 }
