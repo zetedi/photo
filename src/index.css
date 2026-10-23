@@ -35,6 +35,9 @@
   --glass-shade: rgb(23 22 20 / 0.07);
   --glass-shadow: rgb(38 30 18 / 0.2);
 
+  --halo: rgb(255 255 255 / 1);
+  --glow: rgb(255 255 255 / 1);
+
   --gutter: clamp(1rem, 3.2vw, 2.75rem);
   color-scheme: light;
 }
@@ -52,6 +55,9 @@
   --glass-edge: rgb(255 255 255 / 0.16);
   --glass-shade: rgb(0 0 0 / 0.3);
   --glass-shadow: rgb(0 0 0 / 0.5);
+
+  --halo: rgb(255 255 255 / 0.85);
+  --glow: rgb(255 240 210 / 0.5);
   color-scheme: dark;
 }
 
@@ -215,15 +221,67 @@
   translate: none;
 }
 
-@keyframes scroll-cue {
-  0% { transform: scaleY(0); transform-origin: top; }
-  45% { transform: scaleY(1); transform-origin: top; }
-  55% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
+/* A camera flash: the photo blooms white from where it was fired, then decays. */
+.flash {
+  background: radial-gradient(
+    circle at var(--fx, 50%) var(--fy, 50%),
+    #fff 0,
+    rgb(255 255 255 / 0.85) 18%,
+    rgb(255 252 244 / 0.45) 55%,
+    rgb(255 250 240 / 0.2) 100%
+  );
+  mix-blend-mode: plus-lighter;
 }
 
-.scroll-cue {
-  animation: scroll-cue 2.8s var(--ease-sway) infinite;
+/* A word catches the flash and glows white for a moment. */
+.shine {
+  display: inline-block;
+  animation: shine 1.8s var(--ease-sway) 0.12s both;
+}
+
+/* …and swells bolder. */
+.shine.swell {
+  animation-name: shine, swell;
+}
+
+/*
+ * A word in a quote keeps room for its boldest self (an invisible bold copy of
+ * `data-shine`), so swelling never reflows the line or resizes the glass around it.
+ */
+[data-shine],
+[data-shine].shine {
+  --swell: 560;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+[data-shine]::after {
+  content: attr(data-shine);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: var(--swell);
+}
+
+.line-mask:has(.shine) {
+  overflow: visible;
+}
+
+@keyframes shine {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);
+  }
+  16% {
+    filter: drop-shadow(0 0 0.06em var(--halo)) drop-shadow(0 0 0.32em var(--glow));
+  }
+}
+
+@keyframes swell {
+  18%,
+  55% {
+    font-weight: var(--swell, 640);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

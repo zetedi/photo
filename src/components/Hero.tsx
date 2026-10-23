@@ -1,4 +1,5 @@
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { shine, useFlash } from '@/hooks/useFlash';
 import { useParallax } from '@/hooks/useParallax';
 import { Link } from '@/router';
 import { site } from '@/site';
@@ -7,12 +8,15 @@ import { Glass } from './Glass';
 import { Loupe } from './Loupe';
 import { Picture } from './Picture';
 
-const LINES = [<>Creating worlds</>, <>through capturing</>, <><em>light</em></>];
-
 const Hero = () => {
   const [shown, setShown] = useState(false);
   const photo = useParallax<HTMLDivElement>(0.08);
   const copy = useParallax<HTMLDivElement>(-0.06);
+  const word = useRef<HTMLElement>(null);
+  // The flash lights up the headline's last word.
+  const { bind, flash } = useFlash(() => shine(word.current, { swell: true }));
+
+  const lines = [<>Creating worlds</>, <>through capturing</>, <em ref={word}>light</em>];
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setShown(true));
@@ -28,7 +32,7 @@ const Hero = () => {
           </p>
 
           <h1 className="display mt-auto pt-16 text-[clamp(3.1rem,5vw,8rem)] lg:pt-0">
-            {LINES.map((line, i) => (
+            {lines.map((line, i) => (
               <span key={i} className="line-mask">
                 <span style={{ '--delay': `${250 + i * 110}ms` } as CSSProperties}>{line}</span>
               </span>
@@ -60,7 +64,10 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="relative mx-gutter aspect-[4/5] overflow-hidden sm:aspect-[3/2] lg:col-span-7 lg:mx-0 lg:aspect-auto lg:h-svh">
+      <div
+        {...bind}
+        className="relative mx-gutter aspect-[4/5] overflow-hidden sm:aspect-[3/2] lg:col-span-7 lg:mx-0 lg:aspect-auto lg:h-svh"
+      >
         <div ref={photo} className="absolute inset-x-0 -top-[8%] h-[116%]">
           <Picture
             id="bg"
@@ -71,6 +78,7 @@ const Hero = () => {
           />
           <Loupe id="bg" rest={[0.52, 0.48]} />
         </div>
+        {flash}
       </div>
     </section>
   );

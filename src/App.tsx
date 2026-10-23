@@ -13,25 +13,29 @@ import { pages, site } from './site';
 const Home = () => (
   <>
     <Hero />
+    {/* Stacked on small screens, the photographs need air between them; side by side they don't. */}
     <Interlude
       id="8"
       quote={
         <>
-          “…seeding light <br />
+          “…seeding <span data-shine="light">light</span> <br />
           into matter…”
         </>
       }
+      lens={{ rest: [0.26, 0.74], size: 0.1, magnification: 2.0 }}
+      className="mt-12 lg:mt-0"
     />
     <Interlude
       id="6"
       quote={
         <>
           “…bringing wonders <br />
-          into sight.”
+          into <span data-shine="sight">sight</span>.”
         </>
       }
+      lens={{ rest: [0.5, 0.53], size: 0.17, magnification: 1.5 }}
       place="low-end"
-      className="mt-gutter"
+      className="mt-12 lg:mt-gutter"
     />
   </>
 );
