@@ -4,7 +4,7 @@ import { LensMark } from './icons';
 
 const Footer = () => {
   return (
-    <footer className="overflow-hidden px-gutter pt-[clamp(5rem,10vw,9rem)] pb-8">
+    <footer className="@container overflow-hidden px-gutter pt-[clamp(5rem,10vw,9rem)] pb-8">
       <div className="flex flex-wrap items-center justify-between gap-6 border-t border-line pt-8">
         <nav aria-label="Social" className="flex gap-8">
           {site.socials.map((s) => (
@@ -23,10 +23,11 @@ const Footer = () => {
       </div>
 
       <p
-        className="display mt-[clamp(3rem,8vw,7rem)] flex items-center gap-[0.12em] text-[13.6vw] leading-[0.85] tracking-[-0.03em] whitespace-nowrap"
+        className="display mt-[clamp(3rem,8vw,7rem)] flex items-center gap-[0.12em] text-[14.2cqi] leading-[0.85] tracking-[-0.03em] whitespace-nowrap"
         aria-hidden="true"
       >
-        <LensMark weight={1.6} className="size-[0.6em] shrink-0 translate-y-[0.04em]" />
+        {/* Pulled left by the ring's inset in its viewBox, so the ink starts on the margin. */}
+        <LensMark weight={1.4} className="-ml-[0.09em] size-[0.95em] shrink-0" />
         <span>
           The Divine <em>Story</em>
         </span>

@@ -29,10 +29,11 @@ const Header = () => {
           to="/"
           onClick={() => setOpen(false)}
           bezel={13}
-          className="pointer-events-auto flex h-12 items-center gap-2.5 pr-5 pl-4 text-ink"
+          className="pointer-events-auto flex h-12 items-center gap-2 pr-5 pl-2.5 text-ink"
           aria-label={`${site.name} — home`}
         >
-          <LensMark className="size-[18px]" />
+          {/* Centred in the pill's rounded end, so the ring sits concentric with the glass. */}
+          <LensMark className="size-7" />
           <span className="font-serif text-[1.3rem] leading-none italic">{site.name}</span>
         </Glass>
 
