@@ -1,6 +1,6 @@
 export const site = {
   name: 'The Divine Story',
-  photographer: 'Zoltan Etedi',
+  photographer: 'Zoltán Etédi',
   url: 'https://photo-12738.web.app',
   socials: [
     { label: 'Instagram', href: '#' },

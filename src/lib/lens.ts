@@ -35,7 +35,8 @@ uniform float u_alpha;
 
 const float BASE = 0.3;                      // flat glass under the dome, in radii
 const vec3 IOR = vec3(1.513, 1.52, 1.533);   // R, G, B — crown glass, dispersion nudged up a little
-const vec2 LIGHT = vec2(-0.5, -0.8);         // light from the upper left
+const vec2 GLINT = vec2(-0.44, -0.44);       // the highlight, in radii from the centre: where the logo's dot sits
+const float GLINT_POWER = 180.0;             // its size: higher is a smaller light
 
 vec2 photoUV(vec2 p) {
   vec2 uv = p / u_host;
@@ -62,9 +63,10 @@ void main() {
   float r = length(d);
   float aa = 1.25 / u_radius;
   float mask = 1.0 - smoothstep(1.0 - aa, 1.0, r);
+  vec2 l2 = normalize(GLINT);                 // light arrives from the glint's side
 
-  // Soft shadow cast down and to the right, plus contact shade at the rim.
-  float sr = length(d - vec2(0.09, 0.15));
+  // Soft shadow cast away from the light, plus contact shade at the rim.
+  float sr = length(d + l2 * 0.175);
   float shadow = (1.0 - smoothstep(0.7, 1.38, sr)) * 0.34
                + (1.0 - smoothstep(1.0, 1.06, r)) * 0.2;
 
@@ -80,9 +82,10 @@ void main() {
     col.b = texture2D(u_tex, photoUV(p - dir * s.b * u_radius)).b;
 
     vec3 n = vec3(dir * sinA, cosA);
-    vec2 l2 = normalize(LIGHT);
     float facing = dot(dir, l2);
-    vec3 h = normalize(normalize(vec3(LIGHT, 1.35)) + vec3(0.0, 0.0, 1.0));
+    // On a hemisphere seen from above, the surface normal at d is (d, z): aim the
+    // half vector at GLINT and the highlight peaks exactly there.
+    vec3 h = vec3(GLINT, sqrt(1.0 - dot(GLINT, GLINT)));
     float nh = max(dot(n, h), 0.0);
 
     float fresnel = 0.04 + 0.96 * pow(1.0 - cosA, 5.0);
@@ -91,7 +94,8 @@ void main() {
     col *= 0.975;                                             // transmission loss
     col = mix(col, env, fresnel * 0.38);                      // reflection at grazing angles
     col *= 1.0 - 0.2 * smoothstep(0.82, 1.0, r) * (0.5 - 0.5 * facing);
-    col += pow(nh, 200.0) * 0.5 + pow(nh, 22.0) * 0.06;      // highlight
+    col = mix(col, vec3(1.0), smoothstep(0.5, 0.86, pow(nh, GLINT_POWER)) * 0.94); // the glint: a crisp, near-white dot
+    col += pow(nh, 26.0) * 0.06;                              // and the soft sheen around it
     col += smoothstep(0.95, 0.995, r) * max(facing, 0.0) * 0.42;   // lit rim
     col += smoothstep(0.965, 0.998, r) * max(-facing, 0.0) * 0.12; // light leaving the far rim
   }

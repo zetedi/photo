@@ -13,7 +13,7 @@ const About = () => {
           <div ref={portrait} className="absolute inset-x-0 -top-[7%] h-[114%]">
             <Picture
               id="zoltan"
-              alt="Zoltan Etedi kneeling in a sunlit garden, a camera in his hands."
+              alt="Zoltán Etédi kneeling in a sunlit garden, camera in hand."
               sizes="(min-width: 1024px) 40vw, 100vw"
               className="size-full object-cover object-[45%_50%]"
             />
@@ -25,7 +25,7 @@ const About = () => {
         <Reveal>
           <p className="eyebrow">02 — About</p>
           <h1 className="display mt-5 text-[clamp(2.75rem,5.4vw,5.75rem)]">
-            Hello, I’m <em>Zoltan&nbsp;Etedi</em>.
+            Hello, I’m <em>Zoltán&nbsp;Etédi</em>.
           </h1>
         </Reveal>
         <Reveal delay={120}>

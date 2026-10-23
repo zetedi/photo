@@ -1,8 +1,9 @@
+/** A lens and its glint. The dot sits where the loupe's highlight falls (GLINT in lib/lens.ts). */
 export function LensMark({ className, weight = 3.5 }: { className?: string; weight?: number }) {
   return (
     <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeLinecap="round" className={className} aria-hidden="true">
       <circle cx="32" cy="32" r="25" strokeWidth={weight} />
-      <path d="M17.5 27.5a15.5 15.5 0 0 1 10-10" strokeWidth={weight * 0.85} />
+      <circle cx="21" cy="21" r={weight * 1.3} fill="currentColor" stroke="none" />
     </svg>
   );
 }

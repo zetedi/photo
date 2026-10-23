@@ -1,6 +1,6 @@
 # The Divine Story
 
-Photography portfolio of Zoltan Etedi — React 19, Vite 8, Tailwind CSS 4, deployed to Firebase Hosting
+Photography portfolio of Zoltán Etédi — React 19, Vite 8, Tailwind CSS 4, deployed to Firebase Hosting
 (`https://photo-12738.web.app`) on every push to `main`.
 
 ## Run locally
