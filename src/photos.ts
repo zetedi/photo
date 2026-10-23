@@ -12,12 +12,12 @@ export interface Work {
 export const works: Work[] = [
   {
     id: '1',
-    title: 'Standing Stones',
+    title: 'Tribe',
     alt: 'Carved wooden seats arranged on a grassy bluff between two palm trunks, with turquoise surf breaking beyond.',
   },
   {
     id: '2',
-    title: 'The Long Walk',
+    title: 'Home Wave',
     alt: 'Aerial view of a lone surfer carrying a board across golden sand as foam spills onto the beach.',
   },
   {
@@ -42,12 +42,12 @@ export const works: Work[] = [
   },
   {
     id: '7',
-    title: 'Turquoise',
+    title: 'One Wave',
     alt: 'Top-down view of turquoise surf rolling onto a strip of pale sand.',
   },
   {
     id: '8',
-    title: 'Morning Mist',
+    title: 'Saṃsāra',
     alt: 'Low mist drifting above a green alpine valley dotted with chalets, beneath a snow-dusted forest.',
   },
 ];
